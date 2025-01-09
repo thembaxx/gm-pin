@@ -16,7 +16,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   return {
     define: {
-      "process.env.GOOGLE_MAPS_API_KEY": JSON.stringify(
+      "import.meta.env.GOOGLE_MAPS_API_KEY": JSON.stringify(
         env.GOOGLE_MAPS_API_KEY
       ),
     },
