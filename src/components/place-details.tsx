@@ -2,6 +2,7 @@ import star_icon from "@/assets/icons/star-fill.svg";
 import clsx from "clsx";
 import { ArrowUpRightFromSquareIcon, Phone } from "lucide-react";
 import Reviews from "./reviews";
+import Photos from "./photos";
 
 interface Props {
   place: google.maps.places.PlaceResult;
@@ -59,6 +60,14 @@ function PlaceDetails({ place }: Props) {
             <p className="mb-2 text-sm font-semibold">Reviews</p>
             <div className="p-4 bg-neutral-900 rounded-2xl">
               <Reviews reviews={place.reviews} />
+            </div>
+          </div>
+        )}
+        {place.photos && place.photos.length > 0 && (
+          <div className="py-4">
+            <p className="mb-4 text-sm font-semibold">Photos</p>
+            <div className="px-2">
+              <Photos photos={place.photos} />
             </div>
           </div>
         )}
