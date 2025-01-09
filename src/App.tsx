@@ -27,7 +27,7 @@ function App() {
   const currentLng = selectedPlace?.geometry?.location?.lng();
 
   return (
-    <div className="flex items-center justify-center h-full px-8 dark">
+    <div className="flex items-center justify-center h-full px-8 overflow-y-auto dark">
       <div className="max-w-[500px] min-w-[320px] w-full md:w-[600px] flex flex-col h-full py-8">
         <header>
           <AutoComplete
