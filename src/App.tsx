@@ -101,7 +101,7 @@ function App() {
                         }
                         borderColor={
                           marker.lat === currentLat && marker.lng === currentLng
-                            ? "#FF2D55"
+                            ? "#FF2D54"
                             : null
                         }
                       />
