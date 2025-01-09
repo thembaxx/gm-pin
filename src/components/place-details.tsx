@@ -1,4 +1,7 @@
 import star_icon from "@/assets/icons/star-fill.svg";
+import clsx from "clsx";
+import { ArrowUpRightFromSquareIcon, Phone } from "lucide-react";
+import Reviews from "./reviews";
 
 interface Props {
   place: google.maps.places.PlaceResult;
@@ -12,8 +15,17 @@ function cleanStr(str: string) {
 function PlaceDetails({ place }: Props) {
   return (
     <div>
-      <p className="mb-2 text-sm font-semibold truncate">
-        {place.name ?? "Unknown"}
+      <p className="mb-2 text-sm font-semibold">
+        <span>{place.name ?? "Unknown"}</span>{" "}
+        {place.opening_hours && (
+          <span
+            className={clsx(
+              place.opening_hours.isOpen() ? "text-[#34C759]" : "text-[#FF3B30]"
+            )}
+          >
+            {place.opening_hours?.isOpen() ? "(Open)" : "(Closed)"}
+          </span>
+        )}
       </p>
       <div className="flex items-center mb-2 space-x-2 text-xs">
         <img src={star_icon} alt="" height={16} width={16} />
@@ -31,9 +43,40 @@ function PlaceDetails({ place }: Props) {
           ))}
         </ul>
       )}
-      <p className="font-mono text-xs text-white/70">
-        {place.formatted_address}
-      </p>
+      <div className="space-y-2">
+        {place.formatted_phone_number && (
+          <div className="flex items-center">
+            <Phone className="text-[#999] mr-2 h-4 w-4" />
+            <a href={`tel:${place.formatted_phone_number}`}>
+              <span className="font-mono text-xs font-semibold">
+                {place.formatted_phone_number}
+              </span>
+            </a>
+          </div>
+        )}
+        {place.reviews && place.reviews.length > 0 && (
+          <div className="py-4">
+            <p className="mb-2 text-sm font-semibold">Reviews</p>
+            <div className="p-4 bg-neutral-900 rounded-2xl">
+              <Reviews reviews={place.reviews} />
+            </div>
+          </div>
+        )}
+        <p className="font-mono text-xs text-white/70">
+          {place.formatted_address}
+        </p>
+        {place.url && (
+          <a
+            href={place.url}
+            target="_blank"
+            rel="norefferer"
+            className="flex items-center text-blue-500"
+          >
+            <span className="text-xs">Open on Maps</span>
+            <ArrowUpRightFromSquareIcon className="w-3 h-3 ml-2" />
+          </a>
+        )}
+      </div>
     </div>
   );
 }
