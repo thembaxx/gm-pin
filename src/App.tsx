@@ -28,7 +28,7 @@ function App() {
 
   return (
     <div className="flex items-center justify-center h-full px-8 pb-8 overflow-y-auto dark">
-      <div className="max-w-[500px] min-w-[320px] w-full md:w-[600px] flex flex-col h-full py-8">
+      <div className="max-w-[500px] min-w-[325px] w-full md:w-[600px] flex flex-col h-full py-8">
         <div>
           <div className="sticky z-10 top-8">
             <header>
