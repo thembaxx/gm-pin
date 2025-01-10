@@ -35,6 +35,24 @@ function App() {
               <AutoComplete
                 onPlaceSelect={(place) => {
                   setSelectedPlace(place);
+
+                  if (places && map && place && place.place_id) {
+                    const svc = new places.PlacesService(map);
+
+                    svc.getDetails(
+                      { placeId: place.place_id },
+                      (result, status) => {
+                        if (
+                          status ===
+                            google.maps.places.PlacesServiceStatus.OK &&
+                          result
+                        ) {
+                          setSelectedPlace(result);
+                        }
+                      }
+                    );
+                  }
+
                   const lat = place?.geometry?.location?.lat();
                   const lng = place?.geometry?.location?.lng();
 

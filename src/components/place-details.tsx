@@ -1,6 +1,6 @@
 import star_icon from "@/assets/icons/star-fill.svg";
 import clsx from "clsx";
-import { ArrowUpRightFromSquareIcon, Phone } from "lucide-react";
+import { ArrowUpRightFromSquareIcon, Clock5Icon, Phone } from "lucide-react";
 import Reviews from "./reviews";
 import Photos from "./photos";
 
@@ -14,6 +14,33 @@ function cleanStr(str: string) {
 }
 
 function PlaceDetails({ place }: Props) {
+  let openStatusText: string | null = null;
+  if (place.opening_hours && place.opening_hours.periods) {
+    const currentDay = new Date().getDay();
+    const match = place.opening_hours.periods.find(
+      (p) => p.open.day === currentDay
+    );
+    if (match) {
+      openStatusText = `Opens ${
+        match.open.hours.toString().length === 1
+          ? "0" + match.open.hours
+          : match.open.hours
+      }:${
+        match.open.minutes.toString().length === 1
+          ? "0" + match.open.minutes
+          : match.open.minutes
+      }   •   Closes ${
+        match.close?.hours.toString().length === 1
+          ? "0" + match.close?.hours
+          : match.close?.hours
+      }:${
+        match.close?.minutes.toString().length === 1
+          ? "0" + match.close?.minutes
+          : match.close?.minutes
+      }`;
+    }
+  }
+
   return (
     <div>
       <p className="mb-2 text-sm font-semibold">
@@ -31,8 +58,13 @@ function PlaceDetails({ place }: Props) {
       <div className="flex items-center mb-2 space-x-2 text-xs">
         <img src={star_icon} alt="" height={16} width={16} />
         <span className="font-mono font-semibold">{place.rating}</span>
-        <span className="font-mono text-white/70">{`(${place.user_ratings_total} votes)`}</span>
+        <span className="font-mono text-white/70">{`(${place.user_ratings_total} Google reviews)`}</span>
       </div>
+      {openStatusText && (
+        <div className="mb-2">
+          <p className="text-[12.8px] leading-4">{openStatusText}</p>
+        </div>
+      )}
       {place.types && place.types.length > 0 && (
         <ul className="flex flex-wrap gap-1.5 mb-4">
           {place.types.map((place) => (
@@ -53,6 +85,25 @@ function PlaceDetails({ place }: Props) {
                 {place.formatted_phone_number}
               </span>
             </a>
+          </div>
+        )}
+        {place.opening_hours && place.opening_hours.weekday_text && (
+          <div className="space-y-4">
+            <div className="flex items-center">
+              <Clock5Icon className="text-[#999] mr-2 h-4 w-4" />
+              <p className="text-[12.8px] -mb-px leading-4 font-semibold ">
+                Operating times
+              </p>
+            </div>
+            <ul className="grid grid-cols-1 gap-4 pl-6">
+              {place.opening_hours.weekday_text.map((str, i) => (
+                <li key={str + i}>
+                  <div className="font-mono text-xs text-neutral-400">
+                    <span>{str}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
         )}
         {place.reviews && place.reviews.length > 0 && (
