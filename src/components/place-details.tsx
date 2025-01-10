@@ -76,6 +76,17 @@ function PlaceDetails({ place }: Props) {
           ))}
         </ul>
       )}
+      {place.website && (
+        <a
+          href={place.website}
+          target="_blank"
+          rel="norefferer"
+          className="flex items-center mb-4 text-xs text-blue-400"
+        >
+          <span>{place.website}</span>
+          <ArrowUpRightFromSquareIcon className="w-4 h-4 ml-2" />
+        </a>
+      )}
       <div className="space-y-2">
         {place.formatted_phone_number && (
           <div className="flex items-center">
