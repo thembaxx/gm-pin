@@ -48,11 +48,11 @@ function App() {
               <div className="w-full overflow-hidden h-80 aspect-video rounded-xl">
                 <Map
                   style={{ width: "100%", height: "100%" }}
-                  defaultCenter={{ lat: 22.54992, lng: 0 }}
+                  defaultCenter={{ lat: 22.54992, lng: -22 }}
                   defaultZoom={3}
                   gestureHandling={"greedy"}
                   disableDefaultUI={true}
-                  mapId="xsdfsdkfuwiwrebfd"
+                  mapId="xsdfsdkfuwiwrebff"
                   onClick={async (e) => {
                     if (!e.detail.latLng) return;
 
